@@ -1,5 +1,5 @@
 class Author
-    attr_accessor :name, :bookauthor, :book
+    attr_reader :book
 
     @@all = []
     
@@ -13,14 +13,15 @@ class Author
     end
 
     def books
-        Book.all.select do |book|
-            book.author == self
+        BookAuthor.all.select do |book_author|
+            book_author.author == self
+        end.map do |my_written_book|
+            my_written_book.book
         end
     end
 
-    def add_book title
-        Book.new title, self 
+    def add_book book 
+        BookAuthor.new book, self
     end
 
-    
 end
